@@ -1,0 +1,16 @@
+# Microsoft Foundry Local FAQ and Overview
+
+## What is Microsoft Foundry Local?
+Microsoft Foundry Local is an end-to-end local AI solution that provides a lightweight runtime and SDK for running large language models (LLMs) completely on a user's device. It allows developers to build local, offline AI applications with zero network calls. No cloud account or dedicated GPU is strictly required, as Foundry Local automatically downloads and manages models and runs inference with hardware acceleration across CPUs, GPUs, and NPUs.
+
+## What is Retrieval-Augmented Generation (RAG)?
+Retrieval-Augmented Generation (RAG) is an AI design pattern where relevant information is first retrieved from a custom document set, and then used to augment the model's input prompt as context. Finally, the model generates an answer grounded in that data. This significantly reduces hallucinations and enables source citations by combining embedding-based semantic search with an LLM.
+
+## How does Vector Search work in this architecture?
+Text documents are split into smaller chunks (e.g., 500 characters) and converted into numerical vector representations called embeddings using a model like `qwen3-embedding-0.6b`. These embeddings capture semantic meaning. When a user asks a question, the query is also embedded, and the system computes the cosine similarity between the query vector and the stored document vectors to find the most relevant chunks.
+
+## Why use SQLite for local data?
+SQLite is used as a lightweight local database to store document texts and their embeddings. It is a serverless, self-contained SQL database engine. Its advantages include having no separate server process, cross-platform support, and extremely simple integration, making it ideal for offline, local data storage in simple RAG applications.
+
+## What language models are typically used?
+For local RAG, smaller highly optimized models are preferred to ensure fast response times on consumer hardware. For embedding generation, models like `qwen3-embedding-0.6b` are common. For chat and generation tasks, models such as `phi-3.5-mini` (a highly capable 3-5B parameter model) are frequently used via the Foundry Local catalog.
