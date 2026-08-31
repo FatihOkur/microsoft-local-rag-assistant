@@ -4,8 +4,10 @@ from src.config import DB_PATH, TOP_K_RESULTS
 from src.embeddings import get_embedding
 
 def cosine_similarity(vec_a, vec_b):
-    ''' Evaluates the angle between two multi-dimensional vectors to determine
-    how conceptually related two pieces of text are, regardless of their length. '''
+    ''' 
+    Evaluates the angle between two multi-dimensional vectors to determine
+    how conceptually related two pieces of text are, regardless of their length. 
+    '''
     dot_product = np.dot(vec_a, vec_b)
     norm_a = np.linalg.norm(vec_a)
     norm_b = np.linalg.norm(vec_b)
@@ -16,8 +18,10 @@ def cosine_similarity(vec_a, vec_b):
     return dot_product / (norm_a * norm_b)
 
 def retrieve_top_k(query):
-    ''' Queries the local database and ranks the stored vectors against the query
-    vector to surface the most relevant pieces of context. '''
+    ''' 
+    Queries the local database and ranks the stored vectors against the query
+    vector to surface the most relevant pieces of context. 
+    '''
     query_embedding = get_embedding(query)
     
     conn = sqlite3.connect(DB_PATH)
