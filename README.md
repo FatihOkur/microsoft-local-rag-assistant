@@ -5,10 +5,10 @@ This project is a fully local, offline Retrieval-Augmented Generation (RAG) know
 
 ## How It Works
 The architecture consists of the following components:
-1. **Data Ingestion**: Text documents placed in the `data/` folder are read and intelligently split into chunks respecting paragraph and sentence boundaries. The ingestion pipeline supports **incremental updates**, meaning it tracks file modification times and intelligently skips unmodified files, re-embeds changed files, and cleans up deleted documents.
+1. **Data Ingestion**: Text documents placed in the `data/` folder are read and intelligently split into chunks respecting paragraph and sentence boundaries. It uses an advanced overlap algorithm (`CHUNK_OVERLAP`) to ensure that sentences are never abruptly cut off and context isn't lost across chunk boundaries. The ingestion pipeline supports **incremental updates**, meaning it tracks file modification times and intelligently skips unmodified files, re-embeds changed files, and cleans up deleted documents.
 2. **Vector Database**: Document chunks, their embeddings (using `qwen3-embedding-0.6b`), and file metadata are stored in a lightweight, serverless SQLite database.
 3. **Retrieval**: When a user asks a question, the query is embedded, and cosine similarity is calculated against the stored vectors to retrieve the most semantically relevant document chunks.
-4. **Generation**: The retrieved chunks are injected into a strict system prompt. The local Foundry chat model (`phi-3.5-mini`) generates an answer based *only* on that context, actively citing its sources to reduce hallucinations and provide verifiable answers.
+4. **Generation**: The retrieved chunks are injected into a strict system prompt. The local Foundry chat model (`phi-3.5-mini`) generates an answer based *only* on that context, actively citing its sources to reduce hallucinations and provide verifiable answers. If the context does not contain the answer, it gracefully refuses to answer without awkwardly regurgitating irrelevant context.
 5. **User Interface**: A Streamlit web app provides an interactive chat interface. It clearly displays the generated answer, the exact inference latency metric (in seconds), and allows users to inspect the raw retrieved context and similarity scores for transparency.
 ## Setup Instructions
 
@@ -38,7 +38,7 @@ To automatically test the accuracy and latency of the RAG pipeline against a pre
 ```bash
 python evaluate.py
 ```
-This will loop through answerable and unanswerable edge-case questions, measure the exact processing latency for each, and output the results (alongside the retrieved sources) into `evaluation_logs.csv` for review.
+This will loop through answerable and unanswerable edge-case questions, measure the exact processing latency for each, and output the results (alongside the retrieved sources) into both a programmatic `evaluation_logs.csv` and a human-readable `evaluation_logs.md` for easy review.
 
 ### Testing
 To run the automated unit test suite (which validates the chunking logic and database operations), run:
@@ -49,4 +49,4 @@ python -m unittest tests/test_rag.py
 ## Design Decisions and Limitations
 - **SQLite for Vector Storage**: We use a standard SQLite database with BLOB serialization for embeddings. This is highly portable and requires no external vector database servers, but it relies on a brute-force cosine similarity scan in Python. This is perfect for small personal knowledge bases but would not scale efficiently to millions of documents.
 - **Numpy for Math**: Pure `numpy` is used for cosine similarity to keep dependencies lightweight.
-- **Strict Prompting**: The system prompt forces the model to say "I don't know" if the context doesn't hold the answer, strictly adhering to responsible AI and RAG best practices to prevent hallucinations.
+- **Strict Prompting**: The system prompt forces the model to say "I don't know" if the context doesn't hold the answer, strictly adhering to responsible AI and RAG best practices to prevent hallucinations. It uses conditional logic to ensure the model doesn't attempt to cite irrelevant sources when refusing to answer out-of-domain queries.
