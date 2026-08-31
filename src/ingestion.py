@@ -4,32 +4,42 @@ from src.embeddings import get_embedding
 from src.database import insert_chunk
 
 def read_and_chunk_file(filepath):
-    ''' Splits large documents into smaller overlapping segments so that the
-    context boundaries are not abruptly cut off, preserving semantic meaning
-    for the LLM to understand. '''
+    ''' Splits documents into semantically coherent chunks based on paragraphs
+    and sentences, preventing words from being abruptly cut off. '''
+    from src.config import CHUNK_SIZE
     with open(filepath, 'r', encoding='utf-8') as f:
         text = f.read()
     
+    # Split by paragraphs
+    paragraphs = [p.strip() for p in text.split('\n\n') if p.strip()]
+    
     chunks = []
-    start = 0
-    while start < len(text):
-        end = start + CHUNK_SIZE
-        
-        # Try to snap to a paragraph or sentence boundary to avoid abruptly cutting text
-        if end < len(text):
-            last_break = text.rfind('\n\n', start, end)
-            if last_break != -1 and last_break > start + (CHUNK_SIZE // 2):
-                end = last_break
-            else:
-                last_period = text.rfind('. ', start, end)
-                if last_period != -1 and last_period > start + (CHUNK_SIZE // 2):
-                    end = last_period + 1
-
-        chunk = text[start:end].strip()
-        if chunk:
-            chunks.append(chunk)
+    current_chunk = ""
+    
+    for p in paragraphs:
+        if len(current_chunk) + len(p) <= CHUNK_SIZE:
+            current_chunk += p + "\n\n"
+        else:
+            if current_chunk:
+                chunks.append(current_chunk.strip())
             
-        start = end - CHUNK_OVERLAP
+            if len(p) > CHUNK_SIZE:
+                # Fallback to sentence splitting if paragraph is huge
+                sentences = [s.strip() + '.' for s in p.split('. ') if s.strip()]
+                temp_chunk = ""
+                for s in sentences:
+                    if len(temp_chunk) + len(s) <= CHUNK_SIZE:
+                        temp_chunk += s + " "
+                    else:
+                        if temp_chunk:
+                            chunks.append(temp_chunk.strip())
+                        temp_chunk = s + " "
+                current_chunk = temp_chunk.strip() + "\n\n" if temp_chunk else ""
+            else:
+                current_chunk = p + "\n\n"
+                
+    if current_chunk:
+        chunks.append(current_chunk.strip())
         
     return chunks
 
