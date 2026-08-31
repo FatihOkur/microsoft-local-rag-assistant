@@ -1,0 +1,29 @@
+# ACME CORP: EMPLOYEE HANDBOOK & OPERATIONAL POLICIES
+Last Updated: January 15, 2026
+Document ID: ACME-HB-2026-V2
+
+## SECTION 1: REMOTE WORK AND FLEXIBLE HOURS
+Acme Corp supports a hybrid work environment. All full-time employees are eligible for the Core Hours Program. 
+1. Core Collaboration Hours: All employees must be online and available for meetings between 10:00 AM and 3:00 PM Eastern Standard Time (EST), regardless of their physical location.
+2. Flexible Time: Employees can complete their remaining 3 hours of the standard 8-hour workday either before 10:00 AM or after 3:00 PM EST.
+3. Home Office Stipend: Remote employees receive a one-time stipend of $500 USD to purchase ergonomic furniture. This stipend is distributed on the first payroll cycle following the completion of the 90-day onboarding period. Receipts must be submitted through the Expensify portal under the tag "Remote-2026".
+
+## SECTION 2: PAID TIME OFF (PTO) AND LEAVE
+Acme Corp values work-life balance and provides comprehensive time-off packages based on tenure.
+1. Standard Vacation Accrual: Full-time employees accrue 1.25 days of paid vacation per month, totaling 15 days per calendar year. 
+2. Tenure Bonus Days: Employees who have been with the company for more than 3 consecutive years receive an additional 5 vacation days annually, starting on their third anniversary date.
+3. PTO Carryover Policy: A maximum of 5 unused vacation days can be carried over into the next calendar year. Any additional unused days beyond this 5-day limit are automatically forfeited on December 31st at 11:59 PM. No cash payouts are authorized for unused vacation days except upon formal termination of employment.
+4. Wellness Days: Employees receive 3 fully-paid "Wellness Days" per year. These days are designed for mental health and preventative medical care. Unlike standard PTO, Wellness Days do not accrue, do not carry over, and cannot be taken consecutively.
+
+## SECTION 3: HARDWARE AND SECURITY PROTOCOLS
+Maintaining strict data security is vital to protecting Acme Corp's proprietary intellectual property.
+1. Device Provisioning: All employees are provided with a corporate-issued MacBook Pro or Dell XPS laptop. Personal computers (BYOD) are strictly prohibited from connecting to internal code repositories or production databases.
+2. Password Security: Passwords for all corporate accounts must be a minimum of 16 characters. They must contain at least one uppercase letter, one lowercase letter, one numerical digit, and two unique special characters (e.g., !, @, #, $, %). Passwords must be rotated every 90 days.
+3. Virtual Private Network (VPN): Whenever an employee is working from a public Wi-Fi network (such as a coffee shop, airport, or hotel), they must activate the Acme-Shield VPN client prior to logging into any corporate application.
+4. Reporting Breaches: If a corporate device is lost or stolen, the employee must report the incident to the IT Security Team via the emergency hotline (555-0199) or by emailing security@acmecorp.internal within 2 hours of discovering the loss.
+
+## SECTION 4: TRAVEL AND EXPENSE REIMBURSEMENT
+This policy outlines the rules for authorized business travel expenditures.
+1. Air Travel: Employees must book economy class for all domestic flights under 6 hours in duration. Business class travel is only authorized for international flights where the continuous airborne travel time exceeds 6 hours.
+2. Lodging Caps: The maximum allowable daily reimbursement rate for hotel accommodations is $250 USD per night in major metropolitan areas (New York City, San Francisco, London, Tokyo) and $150 USD per night in all other locations.
+3. Meal Allowance: Acme Corp utilizes a per diem model for meals during business travel. The flat rate is $75 USD per day, split as follows: $15 for breakfast, $20 for lunch, and $40 for dinner. Itemized receipts are not required for meals falling within the per diem limit, but proof of travel dates must be attached to the expense report.

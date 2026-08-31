@@ -1,0 +1,114 @@
+RKT-MIL-STD-001
+ENVIRONMENTAL RESISTANCE STANDARD FOR ELECTRONIC CONTROL UNITS
+
+Document Version: 1.0
+Document Class: Training Technical Document
+
+1. PURPOSE
+
+This document is designed to define the operating requirements of electronic control units under environmental conditions.
+
+The standard covers operating temperature, storage temperature, humidity, vibration, mechanical shock, altitude, and power requirements.
+
+The values ​​given in this document are hypothetical technical requirements created for use within the scope of the workshop only.
+
+2. OPERATING TEMPERATURE
+
+The electronic control unit must be able to operate normally in ambient temperatures between -40 °C and +85 °C.
+
+The system must be operated at -40 °C for at least 2 hours.
+
+The system must be operated at +85 °C for at least 4 hours.
+
+No performance loss should occur in the basic functions of the system during the temperature test.
+
+3. STORAGE TEMPERATURE
+
+The electronic control unit must be able to be stored at temperatures between -55 °C and +125 °C when not in operation.
+
+After the storage test, the system should be brought to room temperature and, after a minimum of 30 minutes, a functional test should be performed.
+
+Physical deformation or loss of electronic function after the storage test is unacceptable.
+
+4. HUMIDITY RESISTANCE
+
+The system must be able to operate up to 95% relative humidity.
+
+The humidity test should be performed at an ambient temperature of +40 °C.
+
+The test duration should be 48 hours.
+
+At the end of the test, no condensation should occur in the system to the extent that it would cause an electrical short circuit or loss of function.
+
+5. VIBRATION TEST
+
+The system must be resistant to vibrations between 10 Hz and 2000 Hz.
+
+The vibration test should be applied separately in the X, Y, and Z axes.
+
+The test duration should be 30 minutes per axis.
+
+The electronic control unit must be actively operating during the test.
+
+No loosening of connecting elements, mechanical damage, or interruption of system functions should occur during the vibration test.
+
+6. MECHANICAL SHOCK TEST
+
+The electronic control unit must be able to withstand a maximum mechanical shock level of 40 g.
+
+The duration of the shock pulse should be 11 milliseconds.
+
+The test should be applied in the positive and negative directions on the X, Y, and Z axes.
+
+Three shock pulses should be applied in each direction.
+
+The system should be able to perform its normal functions after the test.
+
+7. ALTITUDE REQUIREMENTS
+
+The electronic control unit must be able to operate up to an altitude of 5000 meters above sea level.
+
+The system must be kept active during the low-pressure test.
+
+The test duration should be a minimum of 60 minutes.
+
+No interruption of communication and control functions should occur during the test.
+
+8. POWER REQUIREMENTS
+
+The nominal operating voltage of the electronic control unit is 28 V DC.
+
+The system must be able to operate normally with input voltages between 22 V DC and 32 V DC.
+
+The nominal power consumption should not exceed 60 W.
+
+The system can consume a maximum of 90 W of power at startup.
+
+The system should not suffer permanent damage in case of reverse polarity.
+
+9. POST-TEST ACCEPTANCE CRITERIA
+
+After the completion of environmental tests, a functional test must be applied to the electronic control unit.
+
+All of the following conditions must be met:
+
+- The system must be able to power on.
+- Communication functions must be working.
+- Sensor inputs must be read correctly.
+- Control outputs must be working.
+- There should be no permanent mechanical deformation.
+- There should be no physical damage to electronic components.
+
+If any of these requirements are not met, the system will be considered to have failed the environmental durability test.
+
+10. SUMMARY
+
+The electronic control unit must:
+
+Operate between -40 °C and +85 °C,
+Be able to be stored between -55 °C and +125 °C,
+Withstand 95% relative humidity,
+Operate in a vibration environment between 10 Hz and 2000 Hz,
+Withstand 40 g of mechanical shock,
+Operate up to an altitude of 5000 meters,
+And function with an input voltage between 22 V DC and 32 V DC.

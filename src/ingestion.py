@@ -5,11 +5,24 @@ from src.database import insert_chunk
 
 def read_and_chunk_file(filepath):
     ''' Splits documents into semantically coherent chunks based on paragraphs
-    and sentences, preventing words from being abruptly cut off. '''
-    from src.config import CHUNK_SIZE
+    and sentences, preventing words from being abruptly cut off, while preserving
+    contextual overlap across chunks. '''
+    global CHUNK_SIZE, CHUNK_OVERLAP
     with open(filepath, 'r', encoding='utf-8') as f:
         text = f.read()
     
+    def get_overlap_text(text, overlap_size):
+        if not text or overlap_size <= 0:
+            return ""
+        text = text.strip()
+        if len(text) <= overlap_size:
+            return text
+        overlap = text[-overlap_size:]
+        space_idx = overlap.find(' ')
+        if space_idx != -1 and space_idx < len(overlap) - 1:
+            return overlap[space_idx + 1:]
+        return overlap
+
     # Split by paragraphs
     paragraphs = [p.strip() for p in text.split('\n\n') if p.strip()]
     
@@ -17,26 +30,42 @@ def read_and_chunk_file(filepath):
     current_chunk = ""
     
     for p in paragraphs:
-        if len(current_chunk) + len(p) <= CHUNK_SIZE:
-            current_chunk += p + "\n\n"
-        else:
+        if len(p) > CHUNK_SIZE:
             if current_chunk:
                 chunks.append(current_chunk.strip())
+                overlap_text = get_overlap_text(current_chunk, CHUNK_OVERLAP)
+                current_chunk = overlap_text + " " if overlap_text else ""
             
-            if len(p) > CHUNK_SIZE:
-                # Fallback to sentence splitting if paragraph is huge
-                sentences = [s.strip() + '.' for s in p.split('. ') if s.strip()]
-                temp_chunk = ""
-                for s in sentences:
-                    if len(temp_chunk) + len(s) <= CHUNK_SIZE:
-                        temp_chunk += s + " "
+            # Fallback to sentence splitting if paragraph is huge
+            sentences = [s.strip() + '.' for s in p.split('. ') if s.strip()]
+            for s in sentences:
+                if len(current_chunk) + len(s) <= CHUNK_SIZE:
+                    current_chunk += s + " "
+                else:
+                    if current_chunk:
+                        chunks.append(current_chunk.strip())
+                        overlap_text = get_overlap_text(current_chunk, CHUNK_OVERLAP)
+                        current_chunk = (overlap_text + " ") if overlap_text else ""
+                    
+                    if len(current_chunk) + len(s) > CHUNK_SIZE:
+                        current_chunk = s + " "
                     else:
-                        if temp_chunk:
-                            chunks.append(temp_chunk.strip())
-                        temp_chunk = s + " "
-                current_chunk = temp_chunk.strip() + "\n\n" if temp_chunk else ""
+                        current_chunk += s + " "
+            current_chunk = current_chunk.strip() + "\n\n" if current_chunk else ""
+            
+        else:
+            if len(current_chunk) + len(p) <= CHUNK_SIZE:
+                current_chunk += p + "\n\n"
             else:
-                current_chunk = p + "\n\n"
+                if current_chunk:
+                    chunks.append(current_chunk.strip())
+                    overlap_text = get_overlap_text(current_chunk, CHUNK_OVERLAP)
+                    current_chunk = (overlap_text + " ") if overlap_text else ""
+                
+                if len(current_chunk) + len(p) > CHUNK_SIZE:
+                    current_chunk = p + "\n\n"
+                else:
+                    current_chunk += p + "\n\n"
                 
     if current_chunk:
         chunks.append(current_chunk.strip())
