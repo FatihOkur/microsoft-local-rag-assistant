@@ -6,8 +6,11 @@ from src.config import APP_NAME
 
 def main():
     ''' Initializes the database and ingests all text documents from the data directory. '''
+    from src.database import init_db, clear_db
     print("Initializing database...")
     init_db()
+    print("Clearing old records from database...")
+    clear_db()
     
     print("Initializing Foundry Local...")
     config = Configuration(app_name=APP_NAME)

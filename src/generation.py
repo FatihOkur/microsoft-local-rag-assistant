@@ -14,7 +14,8 @@ def generate_answer(query):
     system_prompt = (
         "You are an offline knowledge assistant. Answer the user's question based ONLY on the "
         "provided context. If the context does not contain sufficient information to answer, "
-        "you must say 'I don't know'. Do not hallucinate or use outside knowledge.\n\n"
+        "you must say 'I don't know'. Do not hallucinate or use outside knowledge.\n"
+        "When answering, you MUST cite the source document name in your answer (e.g., 'according to document_name.txt...').\n\n"
         f"Context:\n{context_string}"
     )
     

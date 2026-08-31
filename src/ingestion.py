@@ -14,9 +14,22 @@ def read_and_chunk_file(filepath):
     start = 0
     while start < len(text):
         end = start + CHUNK_SIZE
-        chunk = text[start:end]
-        chunks.append(chunk)
-        start += (CHUNK_SIZE - CHUNK_OVERLAP)
+        
+        # Try to snap to a paragraph or sentence boundary to avoid abruptly cutting text
+        if end < len(text):
+            last_break = text.rfind('\n\n', start, end)
+            if last_break != -1 and last_break > start + (CHUNK_SIZE // 2):
+                end = last_break
+            else:
+                last_period = text.rfind('. ', start, end)
+                if last_period != -1 and last_period > start + (CHUNK_SIZE // 2):
+                    end = last_period + 1
+
+        chunk = text[start:end].strip()
+        if chunk:
+            chunks.append(chunk)
+            
+        start = end - CHUNK_OVERLAP
         
     return chunks
 

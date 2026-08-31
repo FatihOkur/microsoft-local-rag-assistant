@@ -18,6 +18,14 @@ def init_db():
     conn.commit()
     conn.close()
 
+def clear_db():
+    ''' Clears existing documents from the database to allow fresh ingestion. '''
+    conn = sqlite3.connect(DB_PATH)
+    cursor = conn.cursor()
+    cursor.execute("DELETE FROM documents")
+    conn.commit()
+    conn.close()
+
 def insert_chunk(source_file, chunk_text, embedding):
     ''' Converts the numpy array into a binary format so it can be stored
     safely within SQLite's BLOB data type. '''
