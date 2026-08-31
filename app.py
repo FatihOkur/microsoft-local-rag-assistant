@@ -29,10 +29,16 @@ def main():
     
     if st.button("Generate Answer") and query:
         with st.spinner("Retrieving context and generating answer locally..."):
+            import time
+            start_time = time.time()
             answer, sources = generate_answer(query)
+            end_time = time.time()
+            latency = end_time - start_time
             
             st.markdown("### Answer")
             st.write(answer)
+            
+            st.metric(label="Generation Latency", value=f"{latency:.2f} s")
             
             # Encapsulates the raw context in an expander to maintain a clean UI
             # while still allowing debug inspection of the retrieval quality.

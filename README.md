@@ -9,7 +9,7 @@ The architecture consists of the following components:
 2. **Vector Database**: Document chunks, their embeddings (using `qwen3-embedding-0.6b`), and file metadata are stored in a lightweight, serverless SQLite database.
 3. **Retrieval**: When a user asks a question, the query is embedded, and cosine similarity is calculated against the stored vectors to retrieve the most semantically relevant document chunks.
 4. **Generation**: The retrieved chunks are injected into a strict system prompt. The local Foundry chat model (`phi-3.5-mini`) generates an answer based *only* on that context, actively citing its sources to reduce hallucinations and provide verifiable answers.
-5. **User Interface**: A Streamlit web app provides an interactive chat interface and allows users to inspect the retrieved context and similarity scores for transparency.
+5. **User Interface**: A Streamlit web app provides an interactive chat interface. It clearly displays the generated answer, the exact inference latency metric (in seconds), and allows users to inspect the raw retrieved context and similarity scores for transparency.
 ## Setup Instructions
 
 ### Prerequisites
@@ -32,6 +32,19 @@ The architecture consists of the following components:
    ```bash
    streamlit run app.py
    ```
+
+### Evaluation
+To automatically test the accuracy and latency of the RAG pipeline against a predefined set of queries, run the evaluation script:
+```bash
+python evaluate.py
+```
+This will loop through answerable and unanswerable edge-case questions, measure the exact processing latency for each, and output the results (alongside the retrieved sources) into `evaluation_logs.csv` for review.
+
+### Testing
+To run the automated unit test suite (which validates the chunking logic and database operations), run:
+```bash
+python -m unittest tests/test_rag.py
+```
 
 ## Design Decisions and Limitations
 - **SQLite for Vector Storage**: We use a standard SQLite database with BLOB serialization for embeddings. This is highly portable and requires no external vector database servers, but it relies on a brute-force cosine similarity scan in Python. This is perfect for small personal knowledge bases but would not scale efficiently to millions of documents.
