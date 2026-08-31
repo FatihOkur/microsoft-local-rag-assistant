@@ -5,12 +5,11 @@ This project is a fully local, offline Retrieval-Augmented Generation (RAG) know
 
 ## How It Works
 The architecture consists of the following components:
-1. **Data Ingestion**: Text documents placed in the `data/` folder are read, split into overlapping chunks, and converted into numerical vector embeddings using the local Foundry embedding model (`qwen3-embedding-0.6b`).
-2. **Vector Database**: Document chunks and their embeddings are stored in a lightweight, serverless SQLite database.
+1. **Data Ingestion**: Text documents placed in the `data/` folder are read and intelligently split into chunks respecting paragraph and sentence boundaries. The ingestion pipeline supports **incremental updates**, meaning it tracks file modification times and intelligently skips unmodified files, re-embeds changed files, and cleans up deleted documents.
+2. **Vector Database**: Document chunks, their embeddings (using `qwen3-embedding-0.6b`), and file metadata are stored in a lightweight, serverless SQLite database.
 3. **Retrieval**: When a user asks a question, the query is embedded, and cosine similarity is calculated against the stored vectors to retrieve the most semantically relevant document chunks.
-4. **Generation**: The retrieved chunks are injected into a strict system prompt. The local Foundry chat model (`phi-3.5-mini`) generates an answer based *only* on that context, reducing hallucinations and providing verifiable sources.
+4. **Generation**: The retrieved chunks are injected into a strict system prompt. The local Foundry chat model (`phi-3.5-mini`) generates an answer based *only* on that context, actively citing its sources to reduce hallucinations and provide verifiable answers.
 5. **User Interface**: A Streamlit web app provides an interactive chat interface and allows users to inspect the retrieved context and similarity scores for transparency.
-
 ## Setup Instructions
 
 ### Prerequisites
